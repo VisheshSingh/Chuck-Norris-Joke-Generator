@@ -13,7 +13,19 @@ function loadJokes(e) {
 
   xhr.onload = function() {
     if (this.status == 200) {
-      console.log(this.responseText);
+      let res = JSON.parse(this.responseText);
+
+      let output = "";
+
+      if (res.type === "success") {
+        res.value.forEach(joke => {
+          output += `<li>${joke.joke}</li>`;
+        });
+      } else {
+        output += `<h3>Opps! looks like something went wrong</h3>`;
+      }
+
+      document.getElementById("jokes-list").innerHTML = output;
     }
   };
 
